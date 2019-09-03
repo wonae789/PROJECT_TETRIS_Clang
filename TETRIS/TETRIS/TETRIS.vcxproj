@@ -124,6 +124,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="blockStageControl.c" />
+    <ClCompile Include="drawBoard.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="KeyCurControl.c" />
     <ClCompile Include="tetrisMain.c" />
   </ItemGroup>

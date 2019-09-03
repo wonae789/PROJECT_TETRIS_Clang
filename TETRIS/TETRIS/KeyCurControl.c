@@ -27,7 +27,7 @@ void RemoveCursor(void)
 }
 
 // 함수 : point GetCurrentCursorPos(void)
-// 기능 : 커서 위치 정보 담은 구조체 변수를 반환
+// 기능 : 커서 위치 정보 담은 구조체 변수를 반환(현재 위치를 커서정보를 얻기위함)
 // 반환 : point
 
 point GetCurrentCursorPos(void)
@@ -35,7 +35,7 @@ point GetCurrentCursorPos(void)
 	point curPoint;
 	CONSOLE_SCREEN_BUFFER_INFO curInfo;// 콘솔 출력창의 정보를 담기 위한 구조체. 제공되는것.
 
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo); // 현재 커서의 위치가 curinfo에 저장된다.
 	curPoint.x = curInfo.dwCursorPosition.X;
 	curPoint.y = curInfo.dwCursorPosition.Y;
 
@@ -48,8 +48,13 @@ point GetCurrentCursorPos(void)
 
 void SetCurrentCursorPos(int x, int y)
 {
-	COORD pos = { x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	COORD pos = { x,y }; // Windows.h 에 구현된 함수, 좌표 2개 받음.
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos); // pos 위치로 커서를 이동
+	//SetConsoleCursorPosition - 명령롬프트창에 떠있는 커서의 위치 이동 함수
+	//GetStdHandle(STD_OUTPUT_HANDLE) - 화면에 띄운 명령프롬프트(콘솔창)에 접근하기위한 값을 반환함.
+	//GetStdHandle - 키를 달라는뜻
+	//STD_OUTPUT_HANDLE - 핸들값
+
 }
 
 // 함수 : void ProcessKeyInput(void)
