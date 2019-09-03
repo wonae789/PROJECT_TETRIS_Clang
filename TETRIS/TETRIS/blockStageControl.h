@@ -8,5 +8,7 @@ int GetCurrentBlockIdx(void);
 void ShowBlock(char blockInfo[][4]);
 void DeleteBlock(char blockInfo[][4]);
 void BlockDown(void);
+void BlockRight(void);
+void BlockLeft(void);
 
 #endif

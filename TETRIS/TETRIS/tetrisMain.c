@@ -2,7 +2,7 @@
 #include"KeyCurControl.h"
 #include"blockStageControl.h"
 
-#define START_CURPOS_X (5 *2)
+#define START_CURPOS_X (10 *2)
 #define START_CURPOS_Y (0)
 #define SYS_DELAY 100
 
@@ -20,8 +20,12 @@ int main(void)
 	//블록 내리는 작업
 	while (1)
 	{
-		// 블록 한칸 아래로 이동
+		// 블록 이동
 		BlockDown();
+
+		BlockRight();
+
+		BlockLeft();
 
 		// 잠깐 화면 멈춤 (100)
 		Sleep(SYS_DELAY);

@@ -1,6 +1,6 @@
 #include<time.h>
 #include"common.h"
-#include"point.h"
+//#include"point.h"
 #include"blockInfo.h"
 #include"KeyCurControl.h"
 
@@ -83,6 +83,9 @@ void DeleteBlock(char blockInfo[][4])
 	SetCurrentCursorPos(curPos.x, curPos.y);
 }
 
+// 함수 : void BlockDown(void)
+// 설명 : 블록을 한칸씩 내린다
+// 반환 : void
 
 void BlockDown(void)
 {
@@ -93,4 +96,31 @@ void BlockDown(void)
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
 
+
+// 함수 : void BlockRight(void)
+// 설명 : 블록을 한칸 오른쪽으로
+// 반환 : void
+
+void BlockRight(void)
+{
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX += 1;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+
+// 함수 : void BlockLeft(void)
+// 설명 : 블록을 한칸 왼쪽으로
+// 반환 : void
+
+void BlockLeft(void)
+{
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX -= 1;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
 
