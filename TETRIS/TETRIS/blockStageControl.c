@@ -6,6 +6,7 @@
 
 static int currentBlockModel;
 static int curPosX, curPosY;
+static int rotateSte;
 
 // 함수 : void InitNewBlockPos(int x, int y)
 // 설명 : 블록의 첫 위치 선정
@@ -38,7 +39,7 @@ void ChooseBlock(void)
 
 int GetCurrentBlockIdx(void)
 {
-	return currentBlockModel;
+	return currentBlockModel + rotateSte;
 }
 
 // 함수 : void ShowBlock(char blockInfo[][4])
@@ -104,7 +105,7 @@ void BlockDown(void)
 void BlockRight(void)
 {
 	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
-	curPosX += 1;
+	curPosX += 2;
 
 	SetCurrentCursorPos(curPosX, curPosY);
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
@@ -118,9 +119,33 @@ void BlockRight(void)
 void BlockLeft(void)
 {
 	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
-	curPosX -= 1;
+	curPosX -= 2;
 
 	SetCurrentCursorPos(curPosX, curPosY);
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
+
+// 함수 : void BlockRotate(void)
+// 설명 : 블록 회전
+// 반환 : void
+
+void BlockRotate(void)
+{
+
+	int nextRotSte;
+
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+
+	nextRotSte = rotateSte + 1;
+	nextRotSte %= 4;
+	rotateSte = nextRotSte;
+
+
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+
+
 
