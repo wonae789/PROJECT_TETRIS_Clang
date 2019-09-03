@@ -1,8 +1,17 @@
 #include<time.h>
 #include"common.h"
-//#include"point.h"
 #include"blockInfo.h"
 #include"KeyCurControl.h"
+//#include"point.h"
+
+
+#define GBOARD_WIDTH 10
+#define GBOARD_HEIGHT 20
+
+#define GBOARD_ORIGIN_X 4
+#define GBOARD_ORIGIN_Y 2
+
+static int gameBoardInfo[GBOARD_HEIGHT + 1][GBOARD_WIDTH + 2] = { 0, };
 
 static int currentBlockModel;
 static int curPosX, curPosY;
@@ -149,3 +158,17 @@ void BlockRotate(void)
 
 
 
+void GBOARD_MAP(void)
+{
+	int i, j;
+	for (i = 0; i < GBOARD_HEIGHT; i++)
+	{
+		for (j = 0; j < GBOARD_WIDTH; j++)
+		{
+			if (i == GBOARD_HEIGHT + 1 || j == 0 || j == GBOARD_WIDTH +1)
+				gameBoardInfo[i][j] = 1;
+			else
+				gameBoardInfo[i][j] = 0;
+		}
+	}
+}
