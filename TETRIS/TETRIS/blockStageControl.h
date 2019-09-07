@@ -7,9 +7,12 @@ void ChooseBlock(void);
 int GetCurrentBlockIdx(void);
 void ShowBlock(char blockInfo[][4]);
 void DeleteBlock(char blockInfo[][4]);
-void BlockDown(void);
+int BlockDown(void);
 void BlockRight(void);
 void BlockLeft(void);
 void BlockRotate(void);
 
+void DrawGameBoard(void);
+void AddCurrentBlockInfoToBoard(void);
+int IsGameOver(void);
 #endif

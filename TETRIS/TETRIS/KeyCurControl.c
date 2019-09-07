@@ -67,7 +67,7 @@ void ProcessKeyInput(void)
 	int i;
 	int key;
 
-	for (i = 0; i < KEY_SENSITIVE; i++)
+	for (i = 0; i < KEY_SENSITIVE; i++) // KEY_SENSITIVE = 100
 	{
 		if (_kbhit() != 0) // _kbhit 키가 입력이 되있는지 안되었는지 확인하는 함수
 			               // _kbhit는 입력되면 true를 반환함
@@ -96,12 +96,12 @@ void ProcessKeyInput(void)
 			}
 		}
 
-		if (i % keyDelayRate == 0) // 나머지 연산. keyDelayRate 5면, 키입력검사 5회당 1번씩 실행됨.
+		if (i % keyDelayRate == 0) // 나머지 연산. keyDelayRate 5면, 키입력검사 5회당 1번씩 실행됨. // keyDelayRate = 10
 			Sleep(SYS_DELAY); // Sleep 함수는 Windows.h 헤더에 정의됨.
 	}
 }
 
-void InitKeyDelayRate(int rate)
+void InitKeyDelayRate(int rate) // rate 10 전달
 {
 	if (rate < 1)
 		return;

@@ -27,9 +27,6 @@
     <ClCompile Include="tetrisMain.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="drawBoard.c">
-      <Filter>소스 파일\TEMP</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
