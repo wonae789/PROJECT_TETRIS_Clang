@@ -6,7 +6,8 @@
 void RemoveCursor(void);
 point GetCurrentCursorPos(void);
 void SetCurrentCursorPos(int x, int y);
-void ProcessKeyInput(void);
+int ProcessKeyInput(void);
 void InitKeyDelayRate(int rate);
+void KeyDelaySpeedCtl(int addSpeed);
 
 #endif

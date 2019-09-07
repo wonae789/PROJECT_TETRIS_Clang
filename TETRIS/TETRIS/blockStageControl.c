@@ -2,6 +2,8 @@
 #include"common.h"
 #include"blockInfo.h"
 #include"KeyCurControl.h"
+#include "blockStageControl.h"
+#include "scoreLevelControl.h"
 //#include"point.h"
 
 
@@ -13,9 +15,11 @@
 
 static int gameBoardInfo[GBOARD_HEIGHT + 1][GBOARD_WIDTH + 2] = { 0, };
 
+
 static int currentBlockModel;
 static int curPosX, curPosY; //20 , 0 처음 블록 나타낼 위치
 static int rotateSte;  // static은 초기호 안하면 0
+
 
 // 함수 : void InitNewBlockPos(int x, int y)
 // 설명 : 블록의 첫 위치 선정
@@ -117,6 +121,70 @@ int DetectCollision(int posX, int posY, char blockModel[][4]) // pox poy 둘다 콘
 }
 
 
+// 함수 : void DrawSolidBlocks(void)
+// 설명 : 굳어진 블록을 그림
+// 반환 : void
+
+void DrawSolidBlocks(void)
+{
+	int x, y;
+	int cursX, cursY;
+
+	for (y = 0; y < GBOARD_HEIGHT; y++)
+	{
+		for (x = 1; x < GBOARD_WIDTH + 1; x++)
+		{
+			cursX = x * 2 + GBOARD_ORIGIN_X;
+			cursY = y + GBOARD_ORIGIN_Y;
+			SetCurrentCursorPos(cursX, cursY);
+
+			if (gameBoardInfo[y][x] == 1)
+				printf("■");
+			else
+				printf("  ");
+
+		}
+	}
+}
+
+
+
+// 함수 : void RemoveFillUpLine(void)
+// 설명 : 행 단위로 채워진 블록 삭제
+// 반환 : void
+
+void RemoveFillUpLine(void)
+{
+	int x, y;
+	int line;
+
+	for (y = GBOARD_HEIGHT - 1; y > 0; y--)
+	{
+		for (x = 1; x < GBOARD_WIDTH + 1; x++)
+		{
+			if (gameBoardInfo[y][x] != 1)
+				break;
+		}
+		if (x == (GBOARD_WIDTH + 1))
+		{
+			for (line = 0; y - line > 0; line++)
+			{
+				memcpy(&gameBoardInfo[y - line][1],
+					&gameBoardInfo[(y - line) - 1][1],
+					GBOARD_WIDTH * sizeof(int)
+				);
+			}
+
+			y++;
+			AddGameScore(10);
+			ShowCurrentScoreAndLevel();
+		}
+	}
+	DrawSolidBlocks();
+}
+
+
+
 // 함수 : int BlockDown(void)
 // 설명 : 블록을 한칸씩 내린다
 // 반환 : int , 성공 1, 실패 0 반환
@@ -124,7 +192,12 @@ int DetectCollision(int posX, int posY, char blockModel[][4]) // pox poy 둘다 콘
 int BlockDown(void)
 {
 	if (!DetectCollision(curPosX, curPosY + 1, blockModel[GetCurrentBlockIdx()]))
+	{
+
+		AddCurrentBlockInfoToBoard();
+		RemoveFillUpLine();
 		return 0;
+	}
 
 	DeleteBlock(blockModel[GetCurrentBlockIdx()]); // 그려진 블록을 지우고
 	curPosY += 1; // Y축 값을 1 올리고
@@ -133,6 +206,23 @@ int BlockDown(void)
 	ShowBlock(blockModel[GetCurrentBlockIdx()]); // 옮겨진 위치에서 다시 그림을 그린다.
 
 	return 1;
+}
+
+// 함수 : void BlockLeft(void)
+// 설명 : 블록을 한칸 왼쪽으로
+// 반환 : void
+
+void BlockLeft(void)
+{
+
+	if (!DetectCollision(curPosX - 2, curPosY, blockModel[GetCurrentBlockIdx()]))
+		return; // 충돌 여부 확인
+
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX -= 2;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
 
 // 함수 : void BlockRight(void)
@@ -151,23 +241,6 @@ void BlockRight(void)
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
 
-
-// 함수 : void BlockLeft(void)
-// 설명 : 블록을 한칸 왼쪽으로
-// 반환 : void
-
-void BlockLeft(void)
-{
-
-	if (!DetectCollision(curPosX - 2, curPosY, blockModel[GetCurrentBlockIdx()]))
-		return; // 충돌 여부 확인
-
-	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
-	curPosX -= 2;
-
-	SetCurrentCursorPos(curPosX, curPosY);
-	ShowBlock(blockModel[GetCurrentBlockIdx()]);
-}
 
 // 함수 : void BlockRotate(void)
 // 설명 : 블록 회전
@@ -215,6 +288,16 @@ void BlockRotate(void)
 //	}
 //}
 
+
+
+// 함수 : void SolidCurrentBlock(void)
+// 설명 : 현재 블록 을 바닥으로 이동시켜 굳힘.
+// 반환 : void
+
+void SolidCurrentBlock(void)
+{
+	while (BlockDown());
+}
 
 // 함수 : void DrawGameBoard(void)
 // 설명 : 게임 맵
@@ -308,3 +391,5 @@ int IsGameOver(void)
 
 
 }
+
+

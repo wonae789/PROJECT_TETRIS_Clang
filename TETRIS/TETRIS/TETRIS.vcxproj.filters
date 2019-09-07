@@ -27,6 +27,9 @@
     <ClCompile Include="tetrisMain.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="scoreLevelControl.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -42,6 +45,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="blockInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="scoreLevelControl.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

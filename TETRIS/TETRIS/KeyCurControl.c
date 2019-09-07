@@ -10,6 +10,8 @@
 #define UP 72
 #define RIGHT 77
 #define DOWN 80
+#define SPACE 32
+
 
 static int keyDelayRate; // 값 클수록 속도가 증가
 
@@ -62,7 +64,7 @@ void SetCurrentCursorPos(int x, int y)
 // 반환 : void
 
 
-void ProcessKeyInput(void)
+int ProcessKeyInput(void)
 {
 	int i;
 	int key;
@@ -92,6 +94,9 @@ void ProcessKeyInput(void)
 			case DOWN:
 				BlockDown();
 				break;
+			case SPACE:
+				SolidCurrentBlock();
+				return 1;
 
 			}
 		}
@@ -99,11 +104,23 @@ void ProcessKeyInput(void)
 		if (i % keyDelayRate == 0) // 나머지 연산. keyDelayRate 5면, 키입력검사 5회당 1번씩 실행됨. // keyDelayRate = 10
 			Sleep(SYS_DELAY); // Sleep 함수는 Windows.h 헤더에 정의됨.
 	}
+	return 0;
 }
+
+
 
 void InitKeyDelayRate(int rate) // rate 10 전달
 {
 	if (rate < 1)
 		return;
 	keyDelayRate = rate;
+}
+
+// 함수 : void KeyDelaySpeedCtl(int addSpeed)
+// 기능 : 속도 변화
+// 반환 : void
+
+void KeyDelaySpeedCtl(int addSpeed) // addSpeed = LEVEL_DIFF  (2)
+{
+	keyDelayRate += addSpeed;
 }
